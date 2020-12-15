@@ -73,8 +73,16 @@ jobs:
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
-          notification-summary: Azure Functions successfully deployed
+          notification-summary: Deployment Succeeded
           notification-color: 28a745
+      - name: Send Microsoft Teams Notification (Failed)
+        uses: jdcargile/ms-teams-notification@v1.2
+        if: ${{ failure() }}
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
+          notification-summary: Deployment Failed
+          notification-color: dc3545
   deploy_to_tst:
       name: Deploy to TEST environment
       needs: [deploy_to_dev]
@@ -117,5 +125,13 @@ jobs:
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
-          notification-summary: Azure Functions successfully deployed
+          notification-summary: Deployment Succeeded
           notification-color: 28a745
+      - name: Send Microsoft Teams Notification (Failed)
+        uses: jdcargile/ms-teams-notification@v1.2
+        if: ${{ failure() }}
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
+          notification-summary: Deployment Failed
+          notification-color: dc3545
