@@ -53,11 +53,14 @@ jobs:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
           package: ${{ env.OUTPUT_PATH }}
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-      - name: Verify Deployment
+      - name: Smoke Test
+        id: verify-deployment
         uses: fjogeleit/http-request-action@master
         with:
             url: '${{ steps.deploy-to-azure.outputs.app-url }}/api/v1/xbox'
             method: 'GET'
+      - name: Show Smoke Test response
+        run: 'echo ${{ steps.verify-deployment.outputs.response }}'
   deploy_to_tst:
       name: Deploy to TEST environment
       needs: [deploy_to_dev]
