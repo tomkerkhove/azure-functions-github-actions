@@ -41,6 +41,13 @@ jobs:
         url: ${{ steps.deploy-to-azure.outputs.app-url }}/api/v1/xbox
       runs-on: ubuntu-latest
       steps:
+      - name: Send Microsoft Teams Notification (Starting)
+        uses: jdcargile/ms-teams-notification@v1.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
+          notification-summary: Starting deployment to Azure Functions
+          notification-color: 17a2b8
       - name: Download Artifact
         uses: actions/download-artifact@v1
         with:
@@ -61,6 +68,13 @@ jobs:
             method: 'GET'
       - name: Show Smoke Test response
         run: 'echo ${{ steps.verify-deployment.outputs.response }}'
+      - name: Send Microsoft Teams Notification (Success)
+        uses: jdcargile/ms-teams-notification@v1.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
+          notification-summary: Azure Functions successfully deployed
+          notification-color: 28a745
   deploy_to_tst:
       name: Deploy to TEST environment
       needs: [deploy_to_dev]
@@ -71,6 +85,13 @@ jobs:
         url: ${{ steps.deploy-to-azure.outputs.app-url }}/api/v1/xbox
       runs-on: ubuntu-latest
       steps:
+      - name: Send Microsoft Teams Notification (Starting)
+        uses: jdcargile/ms-teams-notification@v1.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
+          notification-summary: Starting deployment to Azure Functions
+          notification-color: 17a2b8
       - name: Download Artifact
         uses: actions/download-artifact@v1
         with:
@@ -91,3 +112,10 @@ jobs:
             method: 'GET'
       - name: Show Smoke Test response
         run: 'echo ${{ steps.verify-deployment.outputs.response }}'
+      - name: Send Microsoft Teams Notification (Success)
+        uses: jdcargile/ms-teams-notification@v1.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
+          notification-summary: Azure Functions successfully deployed
+          notification-color: 28a745
