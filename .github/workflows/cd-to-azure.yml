@@ -2,7 +2,9 @@
 name: Build & Deploy Azure Function
 
 on:
-  [push]
+  push:
+    branches:
+      - main
 
 env:
   OUTPUT_PATH: ${{ github.workspace }}/.output
