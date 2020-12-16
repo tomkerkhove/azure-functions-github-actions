@@ -15,7 +15,7 @@ namespace AzureFunctions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/xbox")] HttpRequest req,
             ILogger log)
         {
-            return new OkObjectResult(new List<string>{"Xbox 360", "Xbox One", "Xbox Series S", "Xbox Series X"});
+            return new OkObjectResult(new List<string>{"Xbox", "Xbox 360", "Xbox One", "Xbox Series S", "Xbox Series X"});
         }
     }
 }
